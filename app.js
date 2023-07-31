@@ -3,15 +3,18 @@ console.log('sono connesso');
 function calculateResult() {
     const inputValue = document.getElementById('number').value;
     const number = parseFloat(inputValue);
-    const result = strangeCalculus(number);
-    const resultSpan = document.getElementById('result');
-    resultSpan.innerText = result;
+    workerCalculus(number);
+    
 }
 
 function workerCalculus(nbr) {
     const worker = new Worker('./lavoratore-salariato.js');
 
     worker.postMessage(nbr);
+    worker.onmessage = (msg) => {
+        const resultSpan = document.getElementById('result');
+        resultSpan.innerText = result;
+    };
 }
 
 function strangeCalculus(nbr) {
